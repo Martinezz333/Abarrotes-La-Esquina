@@ -3,12 +3,12 @@ name: Java CI - Abarrotes La Esquina
 
 on:
   push:
-    branches: [main, develop, master, 'feature/**']
+    branches: [main, develop]
   pull_request:
-    branches: [main, develop, master]
+    branches: [main, develop]
 
 jobs:
-  build:
+  construir:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,12 +16,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configurar Java 11
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '11'
           cache: maven
+          cache-dependency-path: AbarrotesLaEsquina/pom.xml
 
       - name: Compilar y ejecutar pruebas JUnit
-        run: mvn -B clean verify
-        working-directory: AbarrotesLaEsquina
+        run: mvn -f AbarrotesLaEsquina/pom.xml test
+
